@@ -1,0 +1,55 @@
+<div class="column-div d-flex flex-column">
+  <!-- Column Heading-->
+  <div class="d-flex justify-content-center p-3">
+    {{ columnName }}
+  </div>
+
+  <!-- List of tasks-->
+
+  <div class="d-flex flex-column task-list-div">
+
+    <!--Single task-->
+    <div
+      class="d-flex flex-column align-items-center p-1 task-div"
+      *ngFor="let task of this.tasksList"
+    >
+      <div
+        class="card w-75"
+        [ngClass]="{
+          'border-warning': type === 1,
+          'border-primary': type === 2,
+          'border-info': type === 3,
+          'border-success': type === 4
+        }"
+        (click)="changeTaskStatus(task)"
+      >
+        <div
+          class="card-header"
+          [ngClass]="{
+            'text-warning': type === 1,
+            'text-primary': type === 2,
+            'text-info': type === 3,
+            'text-success': type === 4
+          }"
+        >
+          {{ task.title }}
+        </div>
+        <div
+          class="card-body"
+          [ngClass]="{
+            'text-warning': type === 1,
+            'text-primary': type === 2,
+            'text-info': type === 3,
+            'text-success': type === 4
+          }"
+        >
+          <div class="card-text">
+            <div class="d-flex">{{ task.description }}</div>
+
+            <div class="d-flex">{{ task.dueDate }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="container w-100 d-flex flex-column">
+  <div class="d-flex">
+    <app-tasks-column
+      class="col column-type"
+      [columnName]="'Backlogs'"
+      [tasksLimit]="taskService.backlogTasksLimit"
+      [tasksList]="taskService.backlogstasksItemsList$ | async "
+      [type]="1"
+    ></app-tasks-column>
+    <app-tasks-column
+      class="col column-type"
+      [columnName]="'Developments'"
+      [tasksLimit]="taskService.developmentTasksLimit"
+      [tasksList]="taskService.developmentsTasksItemsList$ | async "
+      [type]="2"
+    ></app-tasks-column>
+    <app-tasks-column
+      class="col column-type"
+      [columnName]="'Code Reviews'"
+      [tasksList]="taskService.reviewsTasksItemsList$ | async "
+      [type]="3"
+    ></app-tasks-column>
+    <app-tasks-column
+      class="col column-type"
+      [columnName]="'Acceptance'"
+      [tasksList]="taskService.acceptanceTasksItemsList$ | async "
+      [type]="4"
+    ></app-tasks-column>
+  </div>
+  <div class="d-flex row w-100 p-2">
+    <div class="d-flex align-items-center w-100 justify-content-center">
+      <button type="button" class="btn btn-primary" (click)="addTask()">
+        Add Task
+      </button>
+    </div>
+  </div>
+</div>
