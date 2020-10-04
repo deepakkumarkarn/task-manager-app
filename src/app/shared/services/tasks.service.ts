@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { TasksDTO } from '../models/task-model';
+import { NotificationsService } from './notifications.service';
+import { NotificationRequest } from '../models/notification-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,7 @@ export class TasksService {
   acceptanceTasksListSubject: BehaviorSubject<TasksDTO[]> = new BehaviorSubject([]);
   acceptanceTasksItemsList$ = this.acceptanceTasksListSubject.asObservable ();
 
-  constructor() {
+  constructor(private notificationService: NotificationsService) {
    }
 
   updateTaskStatus(prevTask: any, currentTask: any){
@@ -61,14 +63,30 @@ export class TasksService {
 
     switch (currentTask.taskStatus) {
       case 1:
-        if(this.backlogTasksList.length <= this.backlogTasksLimit)
+        if(this.backlogTasksList.length <= this.backlogTasksLimit){
           this.backlogTasksList.push(currentTask);  
           this.backlogsTasksListSubject.next(this.backlogTasksList);
+        }
+        else{
+          let notificationRequest: NotificationRequest = {
+            message: "No more task allowed. Limit reached",
+            type: 'error',
+          };
+          this.notificationService.showNotification(notificationRequest);
+        }
         break;
       case 2:
-        if(this.developmentTasksList.length <= this.developmentTasksLimit)
+        if(this.developmentTasksList.length <= this.developmentTasksLimit){
           this.developmentTasksList.push(currentTask);  
           this.developmentsTasksListSubject.next(this.developmentTasksList);
+        }
+        else{
+          let notificationRequest: NotificationRequest = {
+            message: "No more task allowed. Limit reached",
+            type: 'error',
+          };
+          this.notificationService.showNotification(notificationRequest);
+        }
         break;
       case 3:
         this.reviewTasksList.push(currentTask);   
